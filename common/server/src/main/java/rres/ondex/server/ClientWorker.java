@@ -65,7 +65,7 @@ public class ClientWorker implements Runnable {
 			String fromClient = in.readLine();
 			System.out.println("FromClient: "+fromClient);
 			request = "";
-			while(!fromClient.equals("Bye.")) { 		
+			while(!"Bye.".equals(fromClient)) {
 				try{					
 					request = request+fromClient+"\n";													
 					fromClient = in.readLine();
