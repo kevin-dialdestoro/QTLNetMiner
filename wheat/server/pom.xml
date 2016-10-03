@@ -19,7 +19,7 @@
 				<version>2.2</version>
 				<configuration>
 					<archive>
-						<index>true</index>
+						<!--<index>true</index>-->
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
@@ -27,6 +27,9 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
+                        <manifestEntries>
+                            <Class-Path>config/</Class-Path>
+                        </manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
