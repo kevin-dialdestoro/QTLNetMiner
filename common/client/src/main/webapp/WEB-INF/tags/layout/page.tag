@@ -32,6 +32,7 @@
         <script type="text/javascript" src="html/GeneMap/dist/js/genemap.js"></script>
 
         <script type="text/javascript" src="html/javascript/utils-config.js"></script>
+        <script type="text/javascript" src="html/javascript/utils_get_resources.js"></script>
         <script type="text/javascript" src="html/javascript/utils.js"></script>
     <!--    <script type="text/javascript" src="html/GViewer/javascript/JavaScriptFlashGateway.js"></script> -->
       	<script type="text/javascript" src="html/javascript/jquery.tablesorter.js"></script>

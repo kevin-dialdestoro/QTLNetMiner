@@ -20,8 +20,8 @@ function showSynonymTable(option,tabBoxRelated){
 $('.suggestorTable:visible').fadeOut(0,function(){
 		option = escapeJquerySelectors(option);
 		tabBoxRelated = escapeJquerySelectors(tabBoxRelated);
-		$('.synonym_right_border').attr('src','html/image/synonym_right_off.png');
-		$('.synonym_left_border').attr('src','html/image/synonym_left_off.png');
+        $('.synonym_right_border').attr('src', getResourceURL('html/image/synonym_right_off.png'));
+        $('.synonym_left_border').attr('src', getResourceURL('html/image/synonym_left_off.png'));
 		$('.buttonSynonym_on').attr('class','buttonSynonym_off');
 
 		$('.tabBox:visible').fadeOut();
@@ -33,8 +33,8 @@ $('.suggestorTable:visible').fadeOut(0,function(){
 		$('#'+relatedTable).fadeIn();
 
 		$('#'+option+'_buttonSynonym').attr('class','buttonSynonym_on');
-		$('#'+option+'synonym_right_border').attr('src','html/image/synonym_right_on.png');
-		$('#'+option+'synonym_left_border').attr('src','html/image/synonym_left_on.png');
+		$('#'+option+'synonym_right_border').attr('src', getResourceURL('html/image/synonym_right_on.png'));
+		$('#'+option+'synonym_left_border').attr('src', getResourceURL('html/image/synonym_left_on.png'));
 	});
 }
 
@@ -59,7 +59,7 @@ $('.resultViewer:visible').fadeOut(0,function(){
 		$('#'+option+'_button').attr('class','button_off');
 
 		//Collapse Suggestor view
-		$('#suggestor_search').attr('src', 'html/image/expand.gif');
+		$('#suggestor_search').attr('src', getResourceURL('html/image/expand.gif'));
 		$('#suggestor_search_area').slideUp(500);
 	});
 }
@@ -162,49 +162,56 @@ function replaceKeywordUndo(oldkeyword, newkeyword, from, target){
  * String containing the legend for all the tables and the network view.
  *
  */
-var legendHtmlContainer = 	"<div id=legend_picture>" +
-								"<div id=legend_container>" +
-									"<table id=legend_frame cellspacing=1>" +
-										"<tr>" +
-											"<td align=center><img src=html/image/Gene.png></td>" +
-											"<td align=center><img src=html/image/Protein.png></td>" +
-											"<td align=center><img src=html/image/Pathway.png></td>" +
-											"<td align=center><img src=html/image/Compound.png></td>" +
-											"<td align=center><img src=html/image/Enzyme.png></td>" +
-											"<td align=center><img src=html/image/Reaction.png></td>" +
-											"<td align=center><img src=html/image/Publication.png></td>" +
-										"</tr><tr>" +
-											"<td align=center><font size=1.8px>Gene</font></td>" +
-											"<td align=center><font size=1.8px>Protein</font></td>" +
-											"<td align=center><font size=1.8px>Pathway</font></td>" +
-											"<td align=center><font size=1.8px>SNP</font></td>" +
-											"<td align=center><font size=1.8px>Enzyme</font></td>" +
-											"<td align=center><font size=1.8px>Reaction</font></td>" +
-											"<td align=center><font size=1.8px>Publication</font></td>" +
-										"</tr><tr>" +
-											"<td align=center></td>" +
-										"</tr><tr>" +
-											"<td align=center><img src=html/image/Phenotype.png></td>" +
-											"<td align=center><img src=html/image/Bioogical_proccess.png></td>" +
-											"<td align=center><img src=html/image/Cellular_component.png></td>" +
-											"<td align=center><img src=html/image/Protein_domain.png></td>" +
-											"<td align=center><img src=html/image/Trait_ontology.png></td>" +
-											"<td align=center><img src=html/image/Molecular_function.png></td>" +
-											/*"<td align=center><img src=html/image/Enzyme_clasification.png></td>" +*/
-											"<td align=center><img src=html/image/Trait.png></td>" +
-										"</tr><tr>" +
-											"<td align=center><font size=1.8px>Phenotype</font></td>" +
-											"<td align=center><font size=1.8px>Biol. Proccess</font></td>" +
-											"<td align=center><font size=1.8px>Cell. Component</font></td>" +
-											"<td align=center><font size=1.8px>Protein Domain</font></td>" +
-											"<td align=center><font size=1.8px>Trait Ontology</font></td>" +
-											"<td align=center><font size=1.8px>Mol. Function</font></td>" +
-											/*"<td align=center><font size=1.8px>Enzyme Classification</font></td>" +*/
-											"<td align=center><font size=1.8px>GWAS</font></td>" +
-										"</tr>" +
-									"</table>" +
-								"</div>" +
-							"</div>";
+var legendHtmlContainer;
+
+function fillLegendHTMLContainer() {
+    legendHtmlContainer = "<div id=legend_picture>" +
+        "<div id=legend_container>" +
+        "<table id=legend_frame cellspacing=1>" +
+        "<tr>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Gene.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Protein.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Pathway.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Compound.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Enzyme.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Reaction.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Publication.png') + "></td>" +
+        "</tr><tr>" +
+        "<td align=center><font size=1.8px>Gene</font></td>" +
+        "<td align=center><font size=1.8px>Protein</font></td>" +
+        "<td align=center><font size=1.8px>Pathway</font></td>" +
+        "<td align=center><font size=1.8px>SNP</font></td>" +
+        "<td align=center><font size=1.8px>Enzyme</font></td>" +
+        "<td align=center><font size=1.8px>Reaction</font></td>" +
+        "<td align=center><font size=1.8px>Publication</font></td>" +
+        "</tr>" +
+//         <tr>" +
+//        "<td align=center></td>" +
+//        "</tr>
+        "<tr>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Phenotype.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Bioogical_proccess.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Cellular_component.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Protein_domain.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Trait_ontology.png') + "></td>" +
+        "<td align=center><img src=" + getResourceURL('html/image/Molecular_function.png') + "></td>" +
+        /*"<td align=center><img src=html/image/Enzyme_clasification.png></td>" +*/
+        "<td align=center><img src=" + getResourceURL('html/image/Trait.png') + "></td>" +
+        "</tr><tr>" +
+        "<td align=center><font size=1.8px>Phenotype</font></td>" +
+        "<td align=center><font size=1.8px>Biol. Proccess</font></td>" +
+        "<td align=center><font size=1.8px>Cell. Component</font></td>" +
+        "<td align=center><font size=1.8px>Protein Domain</font></td>" +
+        "<td align=center><font size=1.8px>Trait Ontology</font></td>" +
+        "<td align=center><font size=1.8px>Mol. Function</font></td>" +
+        /*"<td align=center><font size=1.8px>Enzyme Classification</font></td>" +*/
+        "<td align=center><font size=1.8px>GWAS</font></td>" +
+        "</tr>" +
+        "</table>" +
+        "</div>" +
+        "</div>";
+}
+
 /*
  * Function to check the brackets in a string are balanced
  *
@@ -278,9 +285,12 @@ function evidencePath(id){
 * 	- advanced search
 * 	- tooltips
 */
+$(document).ready(function() {
+    load_utils();
+});
 
-$(document).ready(
-		function(){
+function load_utils() {
+    fillLegendHTMLContainer();
 			//shows the genome or qtl search box and chromosome viewer if there is a reference genome
 			if(reference_genome == true){
 				$('#genomeorqtlsearchbox').show();
@@ -311,7 +321,7 @@ $(document).ready(
                             // this stops refreshQuerySuggester being called when the enter or arrow keys are used.
                             if(e.which !== 13 && e.which !== 37 && e.which !== 38 && e.which !== 39 && e.which !== 40){
                                // Refresh the query suggester table as well if it's already open.
-			       if($('#suggestor_search').attr('src') == "html/image/collapse.gif") {
+			       if($('#suggestor_search').attr('src') == getResourceURL("html/image/collapse.gif")) {
                                   refreshQuerySuggester();
                                   var keyword = $('#keywords').val();
 /*                                  if(keyword.indexOf(' OR ') != -1 || keyword.indexOf(' AND ') != -1) {
@@ -402,9 +412,9 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 			// Region search
 		     $('#region_search').click(
 		    		 function() {
-		    			 var src = ($(this).attr('src') === 'html/image/expand.gif')
-		    	            ? 'html/image/collapse.gif'
-		    	            : 'html/image/expand.gif';
+		    			 var src = ($(this).attr('src') === getResourceURL('html/image/expand.gif'))
+		    	            ? getResourceURL('html/image/collapse.gif')
+		    	            : getResourceURL('html/image/expand.gif');
 		    	         $(this).attr('src', src);
 		    	         $('#region_search_area').animate({
 				               height: 'toggle'
@@ -414,9 +424,9 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 			// Advanced search
 		     $('#advanced_search').click(
 		    		 function() {
-		    			 var src = ($(this).attr('src') === 'html/image/expand.gif')
-		    	            ? 'html/image/collapse.gif'
-		    	            : 'html/image/expand.gif';
+		    			 var src = ($(this).attr('src') === getResourceURL('html/image/expand.gif'))
+		    	            ? getResourceURL('html/image/collapse.gif')
+		    	            : getResourceURL('html/image/expand.gif');
 		    	         $(this).attr('src', src);
 		    	         $('#advanced_search_area').animate({
 				               height: 'toggle'
@@ -426,15 +436,15 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 		     // Suggestor search
 		     $('#suggestor_search').click(
                              function() {				         
-		    			 var src = ($(this).attr('src') === 'html/image/expand.gif')
-		    	            ? 'html/image/collapse.gif'
-		    	            : 'html/image/expand.gif';
+		    			 var src = ($(this).attr('src') === getResourceURL('html/image/expand.gif'))
+		    	            ? getResourceURL('html/image/collapse.gif')
+		    	            : getResourceURL('html/image/expand.gif');
 		    	         $(this).attr('src', src);
 		    	         $('#suggestor_search_area').animate({
 				               height: 'toggle'
 				               }, 500
 				          );	
-						  if($('#suggestor_search').attr('src') == "html/image/collapse.gif") {
+						  if($('#suggestor_search').attr('src') == getResourceURL("html/image/collapse.gif")) {
                                                      refreshQuerySuggester();
 						    }																	  
 		    		 });
@@ -584,7 +594,7 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 
 		    	 			matchCounter(); // updates number of matched documents and genes counter
                                                 // Refresh the Query Suggester, if it's already open.
-	 		                        if($('#suggestor_search').attr('src') == "html/image/collapse.gif") {
+	 		                        if($('#suggestor_search').attr('src') == getResourceURL("html/image/collapse.gif")) {
                                                    refreshQuerySuggester();
                                                   }
 		    	 		});
@@ -653,7 +663,7 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 		 		});
 
 				genemap.draw('#genemap', 'html/data/basemap.xml', null);
-			});
+			};
 
 
 		
@@ -713,7 +723,7 @@ function searchKeyword(){
 		$("#loadingDiv").replaceWith('<div id="loadingDiv"><b>Please provide a valid list of genes.</b></div>');
 	}
 	else{
-		$("#loadingDiv").replaceWith('<div id="loadingDiv"><img src="html/image/spinner.gif" alt="Loading, please wait..." /></div>');
+        $("#loadingDiv").replaceWith('<div id="loadingDiv"><img src="' + getResourceURL("html/image/spinner.gif") + '" alt="Loading, please wait..." /></div>');
 
 		$.ajax({
 	        url:"OndexServlet?"+request,
@@ -750,7 +760,7 @@ function searchKeyword(){
 						$("#pGViewer").replaceWith(genomicView); */
 
 						//Collapse Suggestor view
-						$('#suggestor_search').attr('src', 'html/image/expand.gif');
+						$('#suggestor_search').attr('src', getResourceURL('html/image/expand.gif'));
 				 		$('#suggestor_search_area').slideUp(500);
 					}
 
@@ -809,7 +819,7 @@ function searchKeyword(){
 					genemap.draw('#genemap', basemap, annotations);
 
 					//Collapse Suggestor view
-					$('#suggestor_search').attr('src', 'html/image/expand.gif');
+					$('#suggestor_search').attr('src', getResourceURL('html/image/expand.gif'));
                                         $('#suggestor_search_area').slideUp(500);
 
 					activateButton('resultsTable');
@@ -1592,7 +1602,7 @@ function createSynonymTable(tableUrl){
 						termName = originalTermName.replace(/ /g, '_');
 						termName = termName.replace(/"/g, '');
 						//terms = terms + '<a href="javascript:;" onclick="showSynonymTable(\'tablesorterSynonym'+termName+(countConcepts+1)+'\',\'tabBox_'+termName+'\')"><div class="'+divstyle+'" id="tablesorterSynonym'+termName+(countConcepts+1)+'_buttonSynonym"><img src="html/image/synonym_left_'+imgstatus+'.png" class="synonym_left_border" id="tablesorterSynonym'+termName+(countConcepts+1)+'synonym_left_border"/>'+termName+'<img src="html/image/synonym_right_'+imgstatus+'.png" class="synonym_right_border"  id="tablesorterSynonym'+termName+(countConcepts+1)+'synonym_right_border"/></div></a>';	
-						terms = terms + '<div class="'+divstyle+' synonymTabButton" id="tablesorterSynonym'+termName+'_'+(countConcepts+1)+'_buttonSynonym"><img src="html/image/synonym_left_'+imgstatus+'.png" class="synonym_left_border" id="tablesorterSynonym'+termName+'_'+(countConcepts+1)+'synonym_left_border"/>'+termName.replace(/_/g, " ")+'<img src="html/image/synonym_right_'+imgstatus+'.png" class="synonym_right_border"  id="tablesorterSynonym'+termName+'_'+(countConcepts+1)+'synonym_right_border"/></div>';	
+						terms = terms + '<div class="'+divstyle+' synonymTabButton" id="tablesorterSynonym'+termName+'_'+(countConcepts+1)+'_buttonSynonym"><img src="' + getResourceURL('html/image/synonym_left_'+imgstatus+'.png') + '" class="synonym_left_border" id="tablesorterSynonym'+termName+'_'+(countConcepts+1)+'synonym_left_border"/>'+termName.replace(/_/g, " ")+'<img src="' + getResourceURL('html/image/synonym_right_'+imgstatus+'.png') + '" class="synonym_right_border"  id="tablesorterSynonym'+termName+'_'+(countConcepts+1)+'synonym_right_border"/></div>';
 //                                                console.log("synonymTable[] length= "+ evidenceTable.length +", \t ev_i= "+ ev_i +", termName: "+ termName);
 						tabsBox = '<div class="tabBox" id="tabBox_'+termName+'" '+tabBoxvisibility+'>';
 					//Foreach of Document that belongs to a Term

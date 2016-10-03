@@ -590,7 +590,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                         co_name= metadataJSON.ondexmetadata.concepts[j].conames[k].name;
                         if(co_name !== "") {
                            all_concept_names= all_concept_names + co_name +
-                                   " <a><img src='image/new_images/eye_icon.png' alt='Use' id='"+ co_name +"' onclick='useAsPreferredConceptName(this.id);' title='Use as concept Label'/></a>" +"<br/>";
+                                   " <a><img src='" + getResourceURL('html/image/new_images/eye_icon.png') +"' alt='Use' id='"+ co_name +"' onclick='useAsPreferredConceptName(this.id);' title='Use as concept Label'/></a>" +"<br/>";
                           }
                        }
                     cell2.innerHTML= all_concept_names; // all synonyms.
@@ -661,7 +661,7 @@ cy.cxtmenu(contextMenu); // set Context Menu for all the core elements.
                               }
                             }
                         // Display concept accessions along with an eye icon to use them as preferred concept name.
-                        co_acc= co_acc +" <a><img src='image/new_images/eye_icon.png' alt='Use' id='"+ accession +"' onclick='useAsPreferredConceptName(this.id);' title='Use as concept Label'/></a>";
+                        co_acc= co_acc +" <a><img src='" + getResourceURL('image/new_images/eye_icon.png') +"' alt='Use' id='"+ accession +"' onclick='useAsPreferredConceptName(this.id);' title='Use as concept Label'/></a>";
                         cell1.innerHTML= accessionID;
                         cell2.innerHTML= co_acc;
                        }
