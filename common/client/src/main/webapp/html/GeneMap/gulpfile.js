@@ -142,7 +142,7 @@ gulp.task('copy-assets', ['clean-dist'], function () {
     .pipe(gulp.dest(config.build));
 });
 
-gulp.task('optimise', ['inject', 'copy-assets', 'clean-dist'], function () {
+gulp.task('optimise', ['copy-assets', 'clean-dist'], function () {
   var assets = $.useref({ searchPath: ['.tmp', './bower_components'] });
 
   return gulp.src(config.injectedHtml)

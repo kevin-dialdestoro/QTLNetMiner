@@ -14,8 +14,8 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "1.12.0",
-    "bootstrap": "^3.3.6",
+//    "jquery": "1.12.0",
+//    "bootstrap": "^3.3.6",
     "d3": "3.4.13",
     "lodash": "^4.5.1",
     "es6-promise": "^3.2.1",
@@ -28,7 +28,7 @@
     "bootstrap-touchspin": "~3.1.1",
     "es6-shim": "~0.35.1",
     "es5-shim": "^4.5.9",
-    "jquery-ui": "^1.12.0",
+//    "jquery-ui": "^1.12.0",
     "array-includes": "^1.0.0",
     "bootstrap-select": "^1.11.0"
   },
