@@ -173,6 +173,7 @@ var legendHtmlContainer = 	"<div id=legend_picture>" +
 											"<td align=center><img src=html/image/Enzyme.png></td>" +
 											"<td align=center><img src=html/image/Reaction.png></td>" +
 											"<td align=center><img src=html/image/Publication.png></td>" +
+											"<td align=center><img src=html/image/Disease.png></td>" +
 										"</tr><tr>" +
 											"<td align=center><font size=1.8px>Gene</font></td>" +
 											"<td align=center><font size=1.8px>Protein</font></td>" +
@@ -181,6 +182,7 @@ var legendHtmlContainer = 	"<div id=legend_picture>" +
 											"<td align=center><font size=1.8px>Enzyme</font></td>" +
 											"<td align=center><font size=1.8px>Reaction</font></td>" +
 											"<td align=center><font size=1.8px>Publication</font></td>" +
+											"<td align=center><font size=1.8px>Disease</font></td>" +
 										"</tr><tr>" +
 											"<td align=center></td>" +
 										"</tr><tr>" +
@@ -192,6 +194,7 @@ var legendHtmlContainer = 	"<div id=legend_picture>" +
 											"<td align=center><img src=html/image/Molecular_function.png></td>" +
 											/*"<td align=center><img src=html/image/Enzyme_clasification.png></td>" +*/
 											"<td align=center><img src=html/image/Trait.png></td>" +
+											"<td align=center><img src=html/image/Drug.png></td>" +
 										"</tr><tr>" +
 											"<td align=center><font size=1.8px>Phenotype</font></td>" +
 											"<td align=center><font size=1.8px>Biol. Proccess</font></td>" +
@@ -201,6 +204,7 @@ var legendHtmlContainer = 	"<div id=legend_picture>" +
 											"<td align=center><font size=1.8px>Mol. Function</font></td>" +
 											/*"<td align=center><font size=1.8px>Enzyme Classification</font></td>" +*/
 											"<td align=center><font size=1.8px>GWAS</font></td>" +
+											"<td align=center><font size=1.8px>Drug</font></td>" +
 										"</tr>" +
 									"</table>" +
 								"</div>" +
@@ -281,6 +285,9 @@ function evidencePath(id){
 
 $(document).ready(
 		function(){
+			// add species name to header
+			$('#species_header').text(species_name); // set/ update species name from utils_config.js
+                        
 			//shows the genome or qtl search box and chromosome viewer if there is a reference genome
 			if(reference_genome == true){
 				$('#genomeorqtlsearchbox').show();
@@ -300,6 +307,7 @@ $(document).ready(
 					$('#genemap-tab').hide();
 			}
 			$("#keywords").focus();
+			$('#tabviewer').hide(); // hide by default
 			// Calculates the amount of documents to be displayed with the current query
 			$('#keywords').keyup(function(e) {
 //                            if(e.which !== 13){	//this stops matchCouter being called when the enter key is used to perform a search.
@@ -441,7 +449,7 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 		    //Match counter
 			//$("#keywords").keyup(matchCounter());
 		 	// Tooltip
-		     var sampleQueryButtons = "<strong>Example queries</strong>";
+		     var sampleQueryButtons = "";//"<strong>Example queries</strong>";
 
 		    	$.ajax({
 		    		type: 'GET',
@@ -507,6 +515,8 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 		    				sampleQueryButtons += "</br><a href:'javascript;' class='exampleQuery' id='exampleQuery"+i+"'>"+sampleQueries[i].name+"</button></a>"+desc;
 		    	 			//$("#exampleSelect").append("<option value="+i+">"+sampleQueries[i].term+"</option>");
 		    	 		}
+                                        // add example queries to page
+                                        $('#eg_queries').html(sampleQueryButtons);
 
 		    			// set an event handler to populate the search fields when one of the example queries is clicked
 							$('body').on('click', '.exampleQuery', function() {
@@ -581,7 +591,7 @@ console.log("newestTab (last): "+ $('#suggestor_terms div:last').attr('id'));
 		    		 				$("#advanced_search").click();
 		    		 			}
 		    	 			}
-
+							
 		    	 			matchCounter(); // updates number of matched documents and genes counter
                                                 // Refresh the Query Suggester, if it's already open.
 	 		                        if($('#suggestor_search').attr('src') == "html/image/collapse.gif") {
@@ -680,7 +690,7 @@ function refreshQuerySuggester() {
  */
 function searchKeyword(){
 	var searchMode = getRadioValue(document.gviewerForm.search_mode);
-	var listMode = getRadioValue(document.gviewerForm.list_mode);
+	var listMode = "GL"; // getRadioValue(document.gviewerForm.list_mode);
 	var keyword = escape(trim($("#keywords").val()));
 	var list = $("#list_of_genes").val();
 	var regions = document.getElementById('regions_table').rows.length -2;
@@ -713,6 +723,7 @@ function searchKeyword(){
 		$("#loadingDiv").replaceWith('<div id="loadingDiv"><b>Please provide a valid list of genes.</b></div>');
 	}
 	else{
+		$('#tabviewer').show(); // show Tab buttons and viewer
 		$("#loadingDiv").replaceWith('<div id="loadingDiv"><img src="html/image/spinner.gif" alt="Loading, please wait..." /></div>');
 
 		$.ajax({
@@ -793,19 +804,8 @@ function searchKeyword(){
 					// Setup the mapview component
 					var basemap = "html/data/basemap.xml";
 					var annotations = data_url + splitedResponse[1];
-                                        // create new basemap with bands for genes and pass it as well to the Map Viewer.
-                                        //
-//					console.log("Search response= "+ response +"\n");
-//					console.log("splitedResponse[:]= "+ splitedResponse);
-//					console.log("splitedResponse[0]= "+ splitedResponse[0]);
-//					console.log("splitedResponse[1]= "+ splitedResponse[1]);
-//					console.log("splitedResponse[2]= "+ splitedResponse[2]);
-//					console.log("splitedResponse[3]= "+ splitedResponse[3]);
-//					console.log("results(splitedResponse[4])= "+ results +", candidateGenes= "+ candidateGenes);
-//					console.log("docSize(splitedResponse[5])= "+ splitedResponse);
-//					console.log("totalDocSize(splitedResponse[6])= "+ splitedResponse);
-//					console.log("annotations= "+ annotations);
 
+                                        // create new basemap with bands for genes and pass it as well to the Map Viewer.
 					genemap.draw('#genemap', basemap, annotations);
 
 					//Collapse Suggestor view
@@ -925,17 +925,13 @@ function generateNetwork(url,list){
 }
 
 /*
- * Global variable.
- * Reference for the Network View popup window.
- */
-var cyjs_networkView= false;
-
-/*
  * Function
  * Generates the new lightweight Network graph, using cytoscapeJS.
  * @author: Ajit Singh.
  */
 function generateCyJSNetwork(url,list){
+    populateKnetMenu(); // initialize the KnetMaps menubar, if needed.
+    
     //OndexServlet?mode=network&list=POPTR_0003s06140&keyword=acyltransferase
     $.post(url, list, function(response, textStatus) {
     var oxl = response.split(":")[1];
@@ -943,22 +939,21 @@ function generateCyJSNetwork(url,list){
     // Network Graph: JSON file.
     var network_json= oxl.replace(".oxl", ".json"); // JSON file path
     var jsonFile= data_url + network_json; // the JSON file generated on the server.
-//    console.log("generateCyJSNetwork>> jsonFile: "+ jsonFile);
-
     try {
-         if(cyjs_networkView && !cyjs_networkView.closed) {
-            // If the window is already open, close the window to reopen it later using new JSON dataset (file).
-            cyjs_networkView.close();
-           }
-         cyjs_networkView= window.open("html/networkGraph.html", "Network View",
-                  "fullscreen=yes, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, titlebar=yes, status=yes");
-         // Pass the JSON file path to a global variable in the new window.
-         cyjs_networkView.jsonFile= jsonFile;
-//         console.log("OpenNewWindow>> cyjs_networkView.jsonFile= "+ cyjs_networkView.jsonFile);
+         $("#knet-maps").css("display","block"); // show the KNETviewer menubar.
+         activateButton('NetworkCanvas');
 
-	  // Remove the preloader for the new Network Viewer
-	  $("#loadingNetworkDiv").replaceWith('<div id="loadingNetworkDiv"></div>');
-	  $("#loadingNetwork_Div").replaceWith('<div id="loadingNetwork_Div"></div>');
+         // Show KNETviewer maskloader.
+         showNetworkLoader();
+
+         // Generate the Network Graph after the page load event.
+         generateNetworkGraph(jsonFile);
+        
+         // Remove KNETviewer maskloader.
+         removeNetworkLoader();
+         // Remove the preloader message in Gene View, for the Network Viewer
+         $("#loadingNetworkDiv").replaceWith('<div id="loadingNetworkDiv"></div>');
+	 $("#loadingNetwork_Div").replaceWith('<div id="loadingNetwork_Div"></div>');
         }
     catch(err) {
           var errorMsg= err.stack;
@@ -966,6 +961,46 @@ function generateCyJSNetwork(url,list){
          }
    });
   }
+
+// Add KnetMaps menu bar
+function populateKnetMenu() {
+ var knet_menu= "<input type='image' id='maximizeOverlay' src='html/KnetMaps/image/maximizeOverlay.png' title='Toggle full screen' onclick='OnMaximizeClick();' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='showAll' src='html/KnetMaps/image/showAll.png' onclick='showAll();' title='Show all the concept & relations in the Network' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='relayoutNetwork' src='html/KnetMaps/image/relayoutNetwork.png' onclick='rerunLayout();' title='Re-run the Layout' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='openItemInfoBtn' src='html/KnetMaps/image/openItemInfoBtn.png' onclick='popupItemInfo();' title='Show Info box' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<span class='knet-dropdowns'>"+
+                        "<select id='layouts_dropdown' class='knet-dropdowns' onChange='rerunLayout();' title='Select network layout'>"+
+                            "<option value='Cose_layout' selected='selected' title='using CoSE layout algorithm (useful for larger networks with clustering)'>CoSE layout</option>"+
+                            "<option value='ngraph_force_layout' title='using ngraph_force layout (works well on planar graphs)'>Force layout</option>"+
+                            "<option value='Circle_layout'>Circular layout</option>"+
+                            "<option value='Concentric_layout'>Concentric layout</option>"+
+                            "<option value='Cose_Bilkent_layout' title='using CoSE-Bilkent layout (with node clustering, but performance-intensive for larger networks)'>CoSE-Bilkent layout</option>"+
+                        "</select>"+
+                        "<select id='changeLabelVisibility' class='knet-dropdowns' onChange='showHideLabels(this.value);' title='Select label visibility'>"+
+                            "<option value='None' selected='selected'>Labels: None</option>"+
+                            "<option value='Concepts'>Labels: Concepts</option>"+
+                            "<option value='Relations'>Labels: Relations</option>"+
+                            "<option value='Both'>Labels: Both</option>"+
+                        "</select>"+
+                        "<select id='changeLabelFont' class='knet-dropdowns' onChange='changeLabelFontSize(this.value);' title='Select label font size'>"+
+                            "<option value='8'>Label size: 8px</option>"+
+                            "<option value='12'>Label size: 12px</option>"+
+                            "<option value='16' selected='selected'>Label size: 16px</option>"+
+                            "<option value='20'>Label size: 20px</option>"+
+                            "<option value='24'>Label size: 24px</option>"+
+                            "<option value='28'>Label size: 28px</option>"+
+                            "<option value='32'>Label size: 32px</option>"+
+                            "<option value='36'>Label size: 36px</option>"+
+                            "<option value='40'>Label size: 40px</option>"+
+                        "</select>"+
+			        "</span>"+
+                    "<input type='image' id='resetNetwork' src='html/KnetMaps/image/resetNetwork.png' onclick='resetGraph();' title='Reposition (reset and re-fit) the graph' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='savePNG' src='html/KnetMaps/image/savePNG.png' onclick='exportAsImage();' title='Export the network as a .png image' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='saveJSON' src='html/KnetMaps/image/saveJSON.png' onclick='exportAsJson();' title='Export the network in JSON format' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>"+
+                    "<input type='image' id='helpURL' src='html/KnetMaps/image/help.png' onclick='openKnetHelpPage();' title='Go to help documentation' onmouseover='onHover($(this));' onmouseout='offHover($(this));'>";
+
+ $('#knetmaps-menu').html(knet_menu);
+}
 
 /*
  * Function
@@ -1134,7 +1169,7 @@ function createGenesTable(tableUrl, keyword, rows){
                                     if(gene_Name.length > values[2].length) {
                                        gene_Name= values[2];
                                       }
-                                    // gene_Name to display in Gene View table.
+                                    // gene_Name to display in Gene View table (under Accession).
                                     var gene = '<td><a href = "javascript:;" class="viewGeneNetwork" title="Display in the new KNETviewer" id="viewGeneNetwork_'+i+'">'+gene_Name+'</a></td>';
 
 				    if(multiorganisms == true){
@@ -1149,12 +1184,12 @@ function createGenesTable(tableUrl, keyword, rows){
 						var chr = '';
 						var start = '';
 					}
-				    var score = '<td>'+values[6]+'</td>';
-				    var usersList = '<td>'+values[7]+'</td>';
+				    var score = '<td>'+values[6]+'</td>'; // score
+				    var usersList = '<td>'+values[7]+'</td>'; // is it in user's list
 
-				    //QTL coloum with information box
-				if(reference_genome == true){
-					var withinQTL = '<td>';
+				// QTL column with information box
+				if(reference_genome == true) {
+                                    var withinQTL = '<td>';
 				    if(values[8].length > 1){
 				    	var withinQTLs = values[8].split("||");
 				    	//Shows the icons
@@ -1214,7 +1249,7 @@ function createGenesTable(tableUrl, keyword, rows){
 				       var withinQTL='';
                                       }
 
-					// Foreach evidence show the images - start
+					// For each evidence show the images - start
 					var evidence = '<td>';
 					var values_evidence = values[9];
 					var evidences = values_evidence.split("||");
@@ -1439,8 +1474,8 @@ function createEvidenceTable(tableUrl){
 					if(values[0] !== "Trait") {
                                           table = table + '<td type-sort-value="' + values[0] + '"><div class="evidence_item evidence_item_'+values[0]+'" title="'+values[0]+'"></div></td>';
                                           }
-                                        else { // For Trait, display tooltip text as GWAS instead.
-					  table = table + '<td type-sort-value="' + values[0] + '"><div class="evidence_item evidence_item_'+values[0]+'" title="GWAS"></div></td>';
+                                        else { // For Trait, display tooltip text as GWAS instead & also sort as GWAS.
+					  table = table + '<td type-sort-value=GWAS"' + '"><div class="evidence_item evidence_item_'+values[0]+'" title="GWAS"></div></td>';
                                          }
 					table = table + '<td>'+evidenceValue+'</td>';
 					table = table + '<td>'+values[2]+'</td>';
